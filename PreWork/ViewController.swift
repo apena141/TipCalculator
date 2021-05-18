@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tipControl: UISegmentedControl!
     @IBOutlet weak var tipAmountLabel: UILabel!
     @IBOutlet weak var tipSlider: UISlider!
+    @IBOutlet weak var tipPercentageLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,8 +22,33 @@ class ViewController: UIViewController {
         billAmountTextField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
         tipSlider.setValue(15, animated: false)
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        let defaults = UserDefaults.standard
+        let defaultOne = defaults.string(forKey: "tipOneField")
+        let defaultTwo = defaults.string(forKey: "tipTwoField")
+        let defaultThree = defaults.string(forKey: "tipThreeField")
+        tipControl.setTitle(defaultOne, forSegmentAt: 0)
+        tipControl.setTitle(defaultTwo, forSegmentAt: 1)
+        tipControl.setTitle(defaultThree, forSegmentAt: 2)
+    }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("view did appear")
+    }
 
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        print("view will disappear")
+    }
+
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("view did disappear")
+    }
+    
     @IBAction func calculateTip(_ sender: Any) {
         if(tipControl.selectedSegmentIndex == 3){
             onSliderChangedWithSlider(tipSlider)
@@ -34,6 +60,7 @@ class ViewController: UIViewController {
         
         // Get the total by multiplying tip * tip percentage
         let tipPercentages = [0.15, 0.18, 0.20]
+        tipPercentageLabel.text = String(format: "%.2f", (tipPercentages[tipControl.selectedSegmentIndex] * 100)) + "%"
         let tip = bill * tipPercentages[tipControl.selectedSegmentIndex]
         let total = bill + tip
         tipSlider.setValue(Float(100 * tipPercentages[tipControl.selectedSegmentIndex]), animated: true)
@@ -45,12 +72,10 @@ class ViewController: UIViewController {
     
     
     @IBAction func onSliderChangedWithSlider(_ sender: UISlider) {
+        tipPercentageLabel.text = String(format: "%.2f", tipSlider.value) + "%"
         let bill = Double(billAmountTextField.text!) ?? 0
-        
         let tipPercentage = Double(tipSlider.value) / 100
-        
         let tip = bill * tipPercentage
-        
         let total = bill + tip
         
         tipAmountLabel.text = String(format: "$%.2f", tip)

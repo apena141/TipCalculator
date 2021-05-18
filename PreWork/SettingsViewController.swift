@@ -8,19 +8,27 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-    @IBOutlet weak var tipSliderSwitch: UISwitch!
+    @IBOutlet weak var tipOneField: UITextField!
+    @IBOutlet weak var tipTwoField: UITextField!
+    @IBOutlet weak var tipThreeField: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            
-        // Do any additional setup after loading the view.
-    }
-    
-
-    @IBAction func tipSliderSwitched(_ sender: Any) {
-        // Enable the slider and disable the selector
         
     }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        let defaults = UserDefaults.standard
+        
+        defaults.set(tipOneField.text, forKey: "tipOneField")
+        defaults.set(tipTwoField.text, forKey: "tipTwoField")
+        defaults.set(tipThreeField.text, forKey: "tipThreeField")
+        
+        defaults.synchronize()
+    }
+    
     /*
     // MARK: - Navigation
 
