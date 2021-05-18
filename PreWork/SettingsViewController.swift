@@ -11,10 +11,13 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var tipOneField: UITextField!
     @IBOutlet weak var tipTwoField: UITextField!
     @IBOutlet weak var tipThreeField: UITextField!
+    let defaults = UserDefaults.standard
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        tipOneField.text = defaults.string(forKey: "tipOneField")
+        tipTwoField.text = defaults.string(forKey: "tipTwoField")
+        tipThreeField.text = defaults.string(forKey: "tipThreeField")
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -25,7 +28,6 @@ class SettingsViewController: UIViewController {
         defaults.set(tipOneField.text, forKey: "tipOneField")
         defaults.set(tipTwoField.text, forKey: "tipTwoField")
         defaults.set(tipThreeField.text, forKey: "tipThreeField")
-        
         defaults.synchronize()
     }
     
