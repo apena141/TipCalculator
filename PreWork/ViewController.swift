@@ -27,16 +27,24 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print("ViewWillAppear")
+        if(defaults.bool(forKey: "darkMode") == true){
+            overrideUserInterfaceStyle = .dark
+        }
+        else{
+            overrideUserInterfaceStyle = .light
+        }
+        billAmountTextField.becomeFirstResponder()
         tipControl.setTitle(defaults.string(forKey: "tipOneField"), forSegmentAt: 0)
         tipControl.setTitle(defaults.string(forKey: "tipTwoField"), forSegmentAt: 1)
         tipControl.setTitle(defaults.string(forKey: "tipThreeField"), forSegmentAt: 2)
         tipPercentages.removeAll()
-        tipPercentages.insert(defaults.double(forKey: "tipOneField"), at: 0)
-        tipPercentages.insert(defaults.double(forKey: "tipTwoField"), at: 1)
-        tipPercentages.insert(defaults.double(forKey: "tipThreeField"), at: 2)
-        tipPercentageLabel.text = String(format: "%.2f", tipPercentages[0]) + "%"
-        tipSlider.setValue(Float(tipPercentages[0]), animated: false)
+        
+        tipPercentages.insert(defaults.double(forKey: "tipOneField") / 100, at: 0)
+        tipPercentages.insert(defaults.double(forKey: "tipTwoField") / 100, at: 1)
+        tipPercentages.insert(defaults.double(forKey: "tipThreeField") / 100, at: 2)
+        
+        tipPercentageLabel.text = String(format: "%.2f", tipPercentages[0] * 100) + "%"
+        tipSlider.setValue(Float(tipPercentages[0] * 100), animated: false)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -63,10 +71,10 @@ class ViewController: UIViewController {
         // Get the bill amount
         let bill = Double(billAmountTextField.text!) ?? 0
         // Get the total by mu0ltiplying tip * tip percentage
-        tipPercentageLabel.text = String(format: "%.2f", (tipPercentages[tipControl.selectedSegmentIndex])) + "%"
+        tipPercentageLabel.text = String(format: "%.2f", (tipPercentages[tipControl.selectedSegmentIndex] * 100)) + "%"
         let tip = bill * tipPercentages[tipControl.selectedSegmentIndex]
         let total = bill + tip
-        tipSlider.setValue(Float(tipPercentages[tipControl.selectedSegmentIndex]), animated: true)
+        tipSlider.setValue(Float(tipPercentages[tipControl.selectedSegmentIndex] * 100), animated: true)
         
         // Update the amount label and the total
         tipAmountLabel.text = String(format: "$%.2f", tip)

@@ -68,7 +68,7 @@
                                 <rect key="frame" x="230" y="121" width="120" height="34"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                 <connections>
                                     <action selector="textFieldDidChange:" destination="BYZ-38-t0r" eventType="valueChanged" id="4TD-j5-LCQ"/>
                                 </connections>
@@ -191,12 +191,27 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Dark Mode" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Cld-SO-z45">
+                                <rect key="frame" x="20" y="328" width="114" height="29"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="eFC-0D-seG">
+                                <rect key="frame" x="278" y="327" width="49" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <connections>
+                                    <action selector="onSwitch:" destination="gub-pe-HQ5" eventType="valueChanged" id="dEa-v4-Hgj"/>
+                                </connections>
+                            </switch>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="RwY-ZB-NBE"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
                     <navigationItem key="navigationItem" id="Zbl-sM-0Ly"/>
                     <connections>
+                        <outlet property="darkModeSwitch" destination="eFC-0D-seG" id="CVO-Bi-8NW"/>
                         <outlet property="tipOneField" destination="4vR-W3-WoJ" id="4NE-a9-l3G"/>
                         <outlet property="tipThreeField" destination="NMN-dV-saS" id="45n-lv-tIU"/>
                         <outlet property="tipTwoField" destination="86q-jD-q3q" id="F4s-sS-jQS"/>
